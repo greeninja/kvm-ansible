@@ -42,7 +42,7 @@
 
     - name: Remove extra disks
       file:
-        path: "{{os_path}}/{{ inventory_hostname_short }}-disk{{ item}}.qcow2"
+        path: "{{os_path}}/{{ inventory_hostname_short }}-disk{{ item }}.qcow2"
         state: absent
       with_sequence: "count={{ extra_disks.count }}"
       when: extra_disks is defined

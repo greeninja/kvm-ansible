@@ -19,7 +19,7 @@
   register: osresize
   when: newos.changed
 
-- name: Check on resize
+- name: Check on resize 
   async_status:
     jid: "{{ osresize.ansible_job_id }}"
   delegate_to: "{{ kvm_host }}"

@@ -2,11 +2,11 @@
 
 vms:
   hosts:
-    test1:
-    test2:
+    test1.test.local:
+    test2.test.local:
   vars:
     extra_disks:
-      path: /var/lib/libvirt/images
+      #path: /var/lib/libvirt/images
       size: "40G"
       count: 3
     interfaces:
@@ -17,10 +17,10 @@ vms:
 
 dbs:
   hosts:
-    db1:
+    db1.test.local:
   vars:
     extra_disks:
-      path: /var/lib/libvirt/images
+      #path: /var/lib/libvirt/images
       size: 20G
       count: 1
     interfaces:
@@ -31,7 +31,7 @@ dbs:
     
 lbs:
   hosts:
-    lb01:
+    lb01.test.local:
   vars:
     interfaces:
       - network: test1
