@@ -4,25 +4,9 @@ kvm_addr: 'qemu:///system'
 kvm_host: 192.168.0.15
 remote_cloud_image: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 os_image: /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2
-os_path: /var/lib/libvirt/images
+os_path: /var/lib/virt/nvme
 os_image_size: 40G
 ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILkHWxN2uZZK8in6yY6JnEKgHqkAJ8jysFU3Xuer8UTY"
 enable_spice: true
-
-networks:
-  - name: test1
-    id: 1234
-    dnsname: test.local
-    ipaddress: 10.44.80.1
-    subnet: 255.255.255.0
-    dhcp_start: 10.44.80.10
-    dhcp_end: 10.44.80.100
-  - name: test2
-    id: 5678
-    dnsname: test2.local
-    ipaddress: 10.44.90.1
-    subnet: 255.255.255.0
-    dhcp_start: 10.44.90.10
-    dhcp_end: 10.44.90.100
 
 

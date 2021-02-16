@@ -1,0 +1,139 @@
+---
+
+bastions:
+  hosts:
+    bastion.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.5/24
+  vars:
+    interfaces:
+      - network: ceph-presentation
+    memory: 2
+    vcpus: 2
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
+    
+
+monitors:
+  hosts:
+    ceph-mon01.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.11/24
+    ceph-mon02.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.12/24
+    ceph-mon03.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.13/24
+  vars:
+    interfaces:
+      - network: ceph-presentation
+    memory: 2
+    vcpus: 2
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
+
+t1_osds:
+  hosts:
+    ceph-t1-osd01.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.31/24
+        eth1:
+          ip: 172.16.20.31/24
+    ceph-t1-osd02.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.32/24
+        eth1:
+          ip: 172.16.20.32/24
+    ceph-t1-osd03.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.33/24
+        eth1:
+          ip: 172.16.20.33/24
+    ceph-t1-osd04.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.34/24
+        eth1:
+          ip: 172.16.20.34/24
+  vars:
+    interfaces:
+      - network: ceph-presentation
+      - network: ceph-replication
+    memory: 4
+    vcpus: 4
+    extra_disks:
+      size: 50G
+      count: 4
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
+
+t2_osds:
+  hosts:
+    ceph-t2-osd01.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.41/24
+        eth1:
+          ip: 172.16.20.41/24
+    ceph-t2-osd02.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.42/24
+        eth1:
+          ip: 172.16.20.42/24
+    ceph-t2-osd03.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.43/24
+        eth1:
+          ip: 172.16.20.43/24
+    ceph-t2-osd04.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.44/24
+        eth1:
+          ip: 172.16.20.44/24
+  vars:
+    interfaces:
+      - network: ceph-presentation
+      - network: ceph-replication
+    memory: 8
+    vcpus: 4
+    extra_disks:
+      size: 50G
+      count: 4
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
+
+rgws:
+  hosts:
+    ceph-rgw01.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.101/24
+    ceph-rgw02.ceph.lab:
+      net:
+        eth0:
+          ip: 10.44.20.102/24
+  vars:
+    interfaces:
+      - network: ceph-presentation
+    memory: 8
+    vcpus: 4
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
+
+all:
+  vars:
+    
+    networks:
+      - name: ceph-presentation
+        subnet: 10.44.20.0/24
+        id: 3300
+        dnsname: ceph.lab
+      - name: ceph-replication
+        subnet: 172.16.20.0/24
+        id: 3301

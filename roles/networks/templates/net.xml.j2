@@ -2,10 +2,12 @@
   <name>{{ item.name }}</name>
   <bridge name="virbr{{ item.id }}"/>
   <forward mode="nat"/>
+  {% if item.dnsname is defined %}
   <domain name="{{ item.dnsname }}"/>
-  <ip address="{{ item.ipaddress }}" netmask="{{ item.subnet }}">
+  {% endif %}
+  <ip address="{{ item.subnet | ipaddr('first_usable') }}" netmask="{{ item.subnet | ipaddr('netmask') }}">
     <dhcp>
-      <range start="{{ item.dhcp_start }}" end="{{ item.dhcp_end }}"/>
+      <range start="{{ item.subnet | nthhost(150) }}" end="{{ item.subnet | nthhost(200) }}"/>
     </dhcp>
   </ip>   
 </network>
