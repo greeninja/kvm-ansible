@@ -3,7 +3,19 @@
 vms:
   hosts:
     test1.test.local:
+      net:
+        eth0:
+          ip: 10.44.80.11/24
+        eth1:
+          ip: 10.44.90.11/24
+      ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
     test2.test.local:
+      net:
+        eth0:
+          ip: 10.44.80.12/24
+        eth1:
+          ip: 10.44.90.12/24
+      ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
   vars:
     extra_disks:
       #path: /var/lib/libvirt/images

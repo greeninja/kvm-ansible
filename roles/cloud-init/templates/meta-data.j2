@@ -1,6 +1,17 @@
 instance-id: {{ inventory_hostname_short }}
 local-hostname: {{ inventory_hostname }}
-{% if interfaces | length > 1 %}
+{% if net is defined %}
+network-interfaces: |
+{% for key, val in net.items() %}
+  auto {{ key }}
+  iface {{ key }} inet static
+  address {{ val.ip | ipaddr('address') }}
+  network {{ val.ip | ipaddr('network') }}
+  netmask {{ val.ip | ipaddr('netmask') }}
+  broadcast  {{ val.ip | ipaddr('broadcast') }}
+  gateway {{ val.ip | ipaddr('first_usable') }}
+{% endfor %}
+{% elif interfaces | length > 1 %}
 network-interfaces: |
   auto eth1
   iface eth1 inet dhcp

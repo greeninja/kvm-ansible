@@ -7,5 +7,6 @@
   loop:
     - libguestfs-tools
     - python-lxml
+    - python-netaddr
   delegate_to: "{{ kvm_host }}"
   run_once: true
