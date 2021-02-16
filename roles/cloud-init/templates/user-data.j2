@@ -1,0 +1,31 @@
+#cloud-config
+# Set the default user
+system_info:
+  default_user:
+    name: root
+ 
+# Unlock the default user
+chpasswd:
+  list: |
+     root:{{ ssh_password | default('password') }}
+  expire: False
+
+disable_root: False
+
+# Other settings
+resize_rootfs: True
+ssh_pwauth: True
+timezone: Europe/London
+ 
+# Add any ssh public keys
+ssh_authorized_keys:
+ - {{ ssh_key }}
+ 
+bootcmd:
+ - [ sh, -c, echo "=========bootcmd=========" ]
+  
+runcmd:
+ - [ sh, -c, echo "=========runcmd=========" ]
+  
+# For pexpect to know when to log in and begin tests
+final_message: "SYSTEM READY TO LOG IN"

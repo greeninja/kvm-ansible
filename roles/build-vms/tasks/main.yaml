@@ -1,0 +1,15 @@
+---
+
+- name: Build VMs
+  virt:
+    command: define
+    xml: "{{ lookup('template', vm.xml_file | default('vm.xml.j2')) }}"
+    uri: "{{ kvm_addr }}"
+  delegate_to: "{{ kvm_host }}"
+
+- name: Ensure VM is running
+  virt:
+    name: "{{ inventory_hostname }}"
+    state: running
+    uri: "{{ kvm_addr }}"
+  delegate_to: "{{ kvm_host }}"

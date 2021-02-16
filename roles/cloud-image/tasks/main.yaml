@@ -1,0 +1,7 @@
+---
+
+- name: Get cloud image
+  get_url:
+    url: "{{ remote_cloud_image }}"
+    dest: "{{ os_image }}"
+  delegate_to: "{{ kvm_host }}"

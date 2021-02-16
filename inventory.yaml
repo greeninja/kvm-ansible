@@ -1,0 +1,40 @@
+---
+
+vms:
+  hosts:
+    test1:
+    test2:
+  vars:
+    extra_disks:
+      path: /var/lib/libvirt/images
+      size: "40G"
+      count: 3
+    interfaces:
+      - network: test1
+      - network: test2
+    memory: 2
+    vcpus: 2
+
+dbs:
+  hosts:
+    db1:
+  vars:
+    extra_disks:
+      path: /var/lib/libvirt/images
+      size: 20G
+      count: 1
+    interfaces:
+      - network: test1
+      - network: test2
+    memory: 4
+    vcpus: 2
+    
+lbs:
+  hosts:
+    lb01:
+  vars:
+    interfaces:
+      - network: test1
+    memory: 2
+    vcpus: 2
+

@@ -1,0 +1,18 @@
+---
+
+- name: Define network
+  virt_net:
+    command: define
+    name: "{{ item.name }}"
+    xml: '{{ lookup("template", "net.xml.j2") }}'
+    uri: "{{ kvm_addr }}"
+  loop: "{{ networks }}"
+  delegate_to: "{{ kvm_host }}"
+
+- name: Create networks
+  virt_net:
+    command: create
+    name: "{{ item.name }}"
+    uri: "{{ kvm_addr }}"
+  loop: "{{ networks }}"
+  delegate_to: "{{ kvm_host }}"

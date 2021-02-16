@@ -1,0 +1,30 @@
+---
+
+- name: Build OS Disks
+  shell:
+    cmd: "qemu-img create -f qcow2 {{os_path}}/{{ inventory_hostname_short }}.qcow {{ os_image_size }}"
+  args:
+    creates: "{{os_path}}/{{ inventory_hostname_short }}.qcow"
+  delegate_to: "{{ kvm_host }}"
+  register: newos
+
+- name: Resize OS
+  shell:
+    cmd: "virt-resize --expand {{ os_partition | default('/dev/sda1') }} {{ os_image }} {{os_path}}/{{ inventory_hostname_short }}.qcow"
+  args:
+    executable: /bin/bash
+  delegate_to: "{{ kvm_host }}"
+  async: 600
+  poll: 0
+  register: osresize
+  when: newos.changed
+
+- name: Check on resize
+  async_status:
+    jid: "{{ osresize.ansible_job_id }}"
+  delegate_to: "{{ kvm_host }}"
+  register: jobresult
+  until: jobresult.finished
+  retries: 65
+  delay: 10
+  when: newos.changed

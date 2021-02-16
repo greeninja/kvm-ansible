@@ -1,0 +1,27 @@
+---
+
+- name: Make hostname directory
+  file:
+    path: "/tmp/{{ inventory_hostname_short }}"
+    state: directory
+  delegate_to: "{{ kvm_host }}"
+
+- name: Create cloudinit user-data
+  template:
+    src: user-data.j2
+    dest: "/tmp/{{ inventory_hostname_short }}/user-data"
+  delegate_to: "{{ kvm_host }}"
+
+- name: Create cloudinit meta-data
+  template:
+    src: meta-data.j2
+    dest: "/tmp/{{ inventory_hostname_short }}/meta-data"
+  delegate_to: "{{ kvm_host }}"
+
+- name: Build cloudinit isos
+  shell:
+    cmd: "genisoimage -output {{os_path}}/{{ inventory_hostname_short }}-cloudinit.iso -volid cidata -joliet -rock /tmp/{{ inventory_hostname_short }}/meta-data  /tmp/{{ inventory_hostname_short }}/user-data"
+  args:
+    creates: "{{os_path}}/{{ inventory_hostname_short }}-cloudinit.iso"
+    executable: /bin/bash
+  delegate_to: "{{ kvm_host }}"
