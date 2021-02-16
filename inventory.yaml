@@ -8,17 +8,14 @@ vms:
           ip: 10.44.80.11/24
         eth1:
           ip: 10.44.90.11/24
-      ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
     test2.test.local:
       net:
         eth0:
           ip: 10.44.80.12/24
         eth1:
           ip: 10.44.90.12/24
-      ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
   vars:
     extra_disks:
-      #path: /var/lib/libvirt/images
       size: "40G"
       count: 3
     interfaces:
@@ -26,13 +23,13 @@ vms:
       - network: test2
     memory: 2
     vcpus: 2
+    ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
 
 dbs:
   hosts:
     db1.test.local:
   vars:
     extra_disks:
-      #path: /var/lib/libvirt/images
       size: 20G
       count: 1
     interfaces:

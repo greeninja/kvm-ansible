@@ -1,7 +1,7 @@
 ---
 
 kvm_addr: 'qemu:///system'
-kvm_host: localhost
+kvm_host: 192.168.0.15
 remote_cloud_image: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 os_image: /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2
 os_path: /var/lib/libvirt/images
