@@ -1,4 +1,21 @@
 ---
+all:
+  vars:    
+    networks:
+      - name: ceph-presentation
+        subnet: 10.44.20.0/24
+        id: 3300
+        dnsname: ceph.lab
+      - name: ceph-replication
+        subnet: 172.16.20.0/24
+        id: 3301
+      kvm_host: 192.168.0.15
+      remote_cloud_image: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+      os_image: /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2
+      os_path: /var/lib/virt/nvme
+      os_image_size: 40G
+      ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILkHWxN2uZZK8in6yY6JnEKgHqkAJ8jysFU3Xuer8UTY"
+      # ssh_password: 
 
 bastions:
   hosts:
@@ -126,14 +143,4 @@ rgws:
     vcpus: 4
     ansible_host: "{{ net.eth0.ip | ipaddr('address') }}"
 
-all:
-  vars:
-    
-    networks:
-      - name: ceph-presentation
-        subnet: 10.44.20.0/24
-        id: 3300
-        dnsname: ceph.lab
-      - name: ceph-replication
-        subnet: 172.16.20.0/24
-        id: 3301
+
