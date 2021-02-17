@@ -16,3 +16,4 @@
     - build-disks
     - cloud-init
     - build-vms
+    - build-inv
