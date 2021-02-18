@@ -33,7 +33,7 @@
     <emulator>{{ libvirt_vm_emulator | default('/usr/bin/qemu-system-x86_64')}}</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' />
-      <source file='{{os_path}}/{{ inventory_hostname_short }}.qcow'/>
+      <source file='{{os_path}}/{{ inventory_hostname_short }}.qcow2'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <disk type='file' device='cdrom'>
