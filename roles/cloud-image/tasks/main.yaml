@@ -5,3 +5,4 @@
     url: "{{ remote_cloud_image }}"
     dest: "{{ os_image }}"
   delegate_to: "{{ kvm_host }}"
+  when: remote_cloud_image is defined

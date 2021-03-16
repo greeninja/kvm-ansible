@@ -2,15 +2,15 @@
 
 - name: Build OS Disks
   shell:
-    cmd: "qemu-img create -f qcow2 {{os_path}}/{{ inventory_hostname_short }}.qcow {{ os_image_size }}"
+    cmd: "qemu-img create -f qcow2 {{os_path}}/{{ inventory_hostname_short }}.qcow2 {{ os_image_size }}"
   args:
-    creates: "{{os_path}}/{{ inventory_hostname_short }}.qcow"
+    creates: "{{os_path}}/{{ inventory_hostname_short }}.qcow2"
   delegate_to: "{{ kvm_host }}"
   register: newos
 
 - name: Resize OS
   shell:
-    cmd: "virt-resize --expand {{ os_partition | default('/dev/sda1') }} {{ os_image }} {{os_path}}/{{ inventory_hostname_short }}.qcow"
+    cmd: "virt-resize --expand {{ os_partition | default('/dev/sda1') }} {{ os_image }} {{os_path}}/{{ inventory_hostname_short }}.qcow2"
   args:
     executable: /bin/bash
   delegate_to: "{{ kvm_host }}"

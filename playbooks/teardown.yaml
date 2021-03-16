@@ -19,6 +19,7 @@
           state: destroyed
           uri: "{{ kvm_addr }}"
         delegate_to: "{{ kvm_host }}"
+        throttle: 1
 
       - name: Ensure VM is undefined
         virt:
@@ -26,11 +27,12 @@
           command: undefine
           uri: "{{ kvm_addr }}"
         delegate_to: "{{ kvm_host }}"
+        throttle: 1
       when: inventory_hostname in result.list_vms
 
     - name: Remove OS disks
       file:
-        path: "{{os_path}}/{{ inventory_hostname_short }}.qcow"
+        path: "{{os_path}}/{{ inventory_hostname_short }}.qcow2"
         state: absent
       delegate_to: "{{ kvm_host }}"
 

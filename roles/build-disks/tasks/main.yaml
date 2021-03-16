@@ -11,6 +11,8 @@
 
 - set_fact:
     extra_disk_paths: []
+  delegate_to: "{{ kvm_host }}"
+  run_once: true
 
 - set_fact:
     extra_disk_paths: "{{ extra_disk_paths }} + [ '{{os_path}}/{{ inventory_hostname_short }}-disk{{ item }}.qcow2' ]"
