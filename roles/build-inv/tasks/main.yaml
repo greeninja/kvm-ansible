@@ -1,0 +1,37 @@
+---
+
+- name: Giving the VMs 1 minute to boot
+  pause:
+    minutes: 1
+  delegate_to: localhost
+
+- set_fact:
+    hosts: "{{ hosts | default({}) | combine( { item: hostvars[item]['net']['eth0']['ip'] | ipaddr('address') }) }}"
+  when: hostvars[item]['net'] is defined
+  loop: "{{ groups['all'] }}"
+  run_once: true
+  delegate_to: localhost
+
+- name: "Get dhcp ips"
+  shell: "virsh net-dhcp-leases {{ networks[0]['name'] }} | grep {{ hostvars[item]['inventory_hostname_short'] }} | awk '{print $5}'"
+  when: hostvars[item]['net'] is not defined
+  loop: "{{ groups['all'] }}"
+  register: dhcpips
+  delegate_to: "{{ kvm_host }}"
+  run_once: true
+  changed_when: false
+
+- set_fact:
+    hosts: "{{ hosts | default({}) | combine( {item.item: item.stdout | ipaddr('address') }) }}"
+  when: item.stdout is defined
+  loop: "{{ dhcpips.results }}"
+  run_once: true
+  delegate_to: localhost
+
+- name: Write data file
+  template:
+    src: data.json.j2
+    dest: "{{ inventory_dir }}/data.json"
+  run_once: true
+  delegate_to: localhost
+
