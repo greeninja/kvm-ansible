@@ -1,4 +1,4 @@
-<network>                            
+<network{% if item.dnsmasq_options is defined %} xmlns:dnsmasq='http://libvirt.org/schemas/network/dnsmasq/1.0' {% endif %}>
   <name>{{ item.name }}</name>
   <bridge name="virbr{{ item.id }}"/>
   <forward mode="nat"/>
@@ -9,5 +9,12 @@
     <dhcp>
       <range start="{{ item.subnet | nthhost(150) }}" end="{{ item.subnet | nthhost(200) }}"/>
     </dhcp>
-  </ip>   
+  </ip>
+  {% if item.dnsmasq_options is defined %}
+  <dnsmasq:options>
+  {% for option in item.dnsmasq_options %}
+    <dnsmasq:option value="{{ option }}" />
+  {% endfor %}
+  </dnsmasq:options>
+  {% endif %}
 </network>
